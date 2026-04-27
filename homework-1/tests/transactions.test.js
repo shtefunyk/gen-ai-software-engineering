@@ -81,6 +81,18 @@ describe('GET /transactions', () => {
     expect(res.status).toBe(200);
     expect(res.body).toHaveLength(1);
   });
+
+  it('filters by date range — includes all when range is wide', async () => {
+    const res = await request(app).get('/transactions?from=2000-01-01&to=2099-12-31');
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(3);
+  });
+
+  it('filters by date range — returns empty when range excludes all', async () => {
+    const res = await request(app).get('/transactions?from=2000-01-01&to=2000-01-02');
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(0);
+  });
 });
 
 describe('GET /transactions/:id', () => {
