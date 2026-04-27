@@ -36,7 +36,8 @@ describe('GET /accounts/:accountId/balance', () => {
   it('returns 400 for invalid account format', async () => {
     const res = await request(app).get('/accounts/INVALID/balance');
     expect(res.status).toBe(400);
-    expect(res.body.error).toBeDefined();
+    expect(res.body.error).toBe('Validation failed');
+    expect(Array.isArray(res.body.details)).toBe(true);
   });
 });
 
@@ -51,6 +52,13 @@ describe('GET /accounts/:accountId/summary', () => {
       transactionCount: 0,
       lastTransactionDate: null,
     });
+  });
+
+  it('returns 400 for invalid account format', async () => {
+    const res = await request(app).get('/accounts/INVALID/summary');
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Validation failed');
+    expect(Array.isArray(res.body.details)).toBe(true);
   });
 
   it('returns correct totals for completed transactions', async () => {
@@ -79,15 +87,21 @@ describe('GET /accounts/:accountId/interest', () => {
   it('returns 400 when rate is missing', async () => {
     const res = await request(app).get('/accounts/ACC-12345/interest?days=30');
     expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Validation failed');
+    expect(Array.isArray(res.body.details)).toBe(true);
   });
 
   it('returns 400 when days is missing', async () => {
     const res = await request(app).get('/accounts/ACC-12345/interest?rate=0.05');
     expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Validation failed');
+    expect(Array.isArray(res.body.details)).toBe(true);
   });
 
   it('returns 400 for invalid account format', async () => {
     const res = await request(app).get('/accounts/INVALID/interest?rate=0.05&days=30');
     expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Validation failed');
+    expect(Array.isArray(res.body.details)).toBe(true);
   });
 });
