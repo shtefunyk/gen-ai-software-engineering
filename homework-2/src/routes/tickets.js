@@ -15,17 +15,11 @@ ticketsRouter.post('/tickets', async (req, res) => {
   if (req.query.auto_classify === 'true') {
     try {
       const classification = await classificationService.classify(created);
-      ticketService.update(created.id, {
-        category: classification.category,
-        priority: classification.priority,
-      });
-      const final = ticketService.get(created.id);
-      final.classification = classification;
-      return res.status(201).json(final);
+      const updated = ticketService.setClassification(created.id, classification);
+      return res.status(201).json(updated);
     } catch (err) {
-      const final = ticketService.get(created.id);
-      final.classification_error = err.message;
-      return res.status(201).json(final);
+      const stored = ticketService.get(created.id);
+      return res.status(201).json({ ...stored, classification_error: err.message });
     }
   }
   res.status(201).json(created);
@@ -70,12 +64,12 @@ ticketsRouter.post('/tickets/import', async (req, res) => {
     onCreated: autoClassify
       ? async (ticket) => {
           try {
-            const c = await classificationService.classify(ticket);
-            ticketService.update(ticket.id, { category: c.category, priority: c.priority });
-          } catch (err) {
-            ticketService.update(ticket.id, {});
-            const t = ticketService.get(ticket.id);
-            t.classification_error = err.message;
+            const classification = await classificationService.classify(ticket);
+            ticketService.setClassification(ticket.id, classification);
+          } catch {
+            // soft-fail: ticket stays as created; per-row errors are payload-level
+            // but the import summary's `successful` count still includes this row
+            // since the ticket itself was created successfully.
           }
         }
       : undefined,
@@ -87,11 +81,6 @@ ticketsRouter.post('/tickets/:id/auto-classify', async (req, res) => {
   const ticket = ticketService.get(req.params.id);
   if (!ticket) throw new HttpError(404, 'Ticket not found');
   const classification = await classificationService.classify(ticket);
-  ticketService.update(ticket.id, {
-    category: classification.category,
-    priority: classification.priority,
-  });
-  const final = ticketService.get(ticket.id);
-  final.classification = classification;
+  ticketService.setClassification(ticket.id, classification);
   res.status(200).json(classification);
 });

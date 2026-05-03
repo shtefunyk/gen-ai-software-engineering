@@ -63,6 +63,19 @@ export const ticketService = {
     return ticketStore.save(merged);
   },
 
+  setClassification(id, classification) {
+    const existing = ticketStore.get(id);
+    if (!existing) return null;
+    const merged = {
+      ...existing,
+      category: classification.category,
+      priority: classification.priority,
+      classification,
+      updated_at: new Date().toISOString(),
+    };
+    return ticketStore.save(merged);
+  },
+
   remove(id) {
     return ticketStore.delete(id);
   },
