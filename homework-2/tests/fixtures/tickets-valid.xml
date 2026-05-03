@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_id>C-1</customer_id>
+    <customer_email>a@b.co</customer_email>
+    <customer_name>Ada</customer_name>
+    <subject>login broken</subject>
+    <description>cannot sign in for two days</description>
+    <metadata>
+      <source>web_form</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-2</customer_id>
+    <customer_email>c@d.co</customer_email>
+    <customer_name>Bob</customer_name>
+    <subject>billing</subject>
+    <description>charged twice this month</description>
+    <metadata>
+      <source>email</source>
+    </metadata>
+  </ticket>
+</tickets>
