@@ -9,9 +9,7 @@ vi.mock('@google/genai', () => ({
 
 const { classificationService } = await import('../src/services/classificationService.js');
 
-beforeEach(async () => {
-  generateContent.mockReset();
-});
+beforeEach(() => { generateContent.mockReset(); });
 
 const ticket = {
   id: 't1',
