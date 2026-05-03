@@ -84,4 +84,49 @@ describe('ticket-api', () => {
     expect(res.body).toHaveLength(1);
     expect(res.body[0].id).toBe(a.body.id);
   });
+
+  it('7. PUT /tickets/:id partial update returns 200 and merges metadata', async () => {
+    const app = createApp();
+    const created = await request(app).post('/tickets').send(valid);
+    const res = await request(app)
+      .put(`/tickets/${created.body.id}`)
+      .send({ subject: 'changed', metadata: { browser: 'Firefox' } });
+    expect(res.status).toBe(200);
+    expect(res.body.subject).toBe('changed');
+    expect(res.body.metadata.browser).toBe('Firefox');
+    expect(res.body.metadata.source).toBe('web_form');
+  });
+
+  it('8. PUT /tickets/:id returns 404 for unknown', async () => {
+    const res = await request(createApp())
+      .put('/tickets/missing')
+      .send({ subject: 'x' });
+    expect(res.status).toBe(404);
+  });
+
+  it('9. DELETE /tickets/:id returns 204 then 404 on retry', async () => {
+    const app = createApp();
+    const created = await request(app).post('/tickets').send(valid);
+    const r1 = await request(app).delete(`/tickets/${created.body.id}`);
+    expect(r1.status).toBe(204);
+    const r2 = await request(app).delete(`/tickets/${created.body.id}`);
+    expect(r2.status).toBe(404);
+  });
+
+  it('10. GET /tickets supports from/to filtering on created_at', async () => {
+    const app = createApp();
+    await request(app).post('/tickets').send(valid);
+    const future = '2999-01-01';
+    const res = await request(app).get(`/tickets?from=${future}`);
+    expect(res.body).toHaveLength(0);
+  });
+
+  it('11. POST /tickets/import without ?format= returns 415', async () => {
+    const res = await request(createApp())
+      .post('/tickets/import')
+      .set('Content-Type', 'application/json')
+      .send('[]');
+    expect(res.status).toBe(415);
+    expect(res.body.error).toBe('Unsupported format');
+  });
 });
