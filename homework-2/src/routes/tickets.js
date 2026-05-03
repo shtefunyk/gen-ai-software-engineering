@@ -58,22 +58,28 @@ ticketsRouter.post('/tickets/import', async (req, res) => {
     throw new HttpError(400, 'Empty or unreadable body');
   }
   const autoClassify = req.query.auto_classify === 'true';
-  const result = await importService.importBulk({
-    format,
-    body: req.rawBody,
-    onCreated: autoClassify
-      ? async (ticket) => {
-          try {
-            const classification = await classificationService.classify(ticket);
-            ticketService.setClassification(ticket.id, classification);
-          } catch {
-            // soft-fail: ticket stays as created; per-row errors are payload-level
-            // but the import summary's `successful` count still includes this row
-            // since the ticket itself was created successfully.
+  let result;
+  try {
+    result = await importService.importBulk({
+      format,
+      body: req.rawBody,
+      onCreated: autoClassify
+        ? async (ticket) => {
+            try {
+              const classification = await classificationService.classify(ticket);
+              ticketService.setClassification(ticket.id, classification);
+            } catch {
+              // soft-fail: ticket stays as created; per-row errors are payload-level
+              // but the import summary's `successful` count still includes this row
+              // since the ticket itself was created successfully.
+            }
           }
-        }
-      : undefined,
-  });
+        : undefined,
+    });
+  } catch (err) {
+    if (err instanceof HttpError) throw err;
+    throw new HttpError(400, `Import failed: ${err.message}`);
+  }
   res.status(201).json(result);
 });
 
