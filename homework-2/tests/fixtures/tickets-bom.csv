@@ -1,0 +1,2 @@
+﻿customer_id,customer_email,customer_name,subject,description,metadata.source
+C-3,e@f.co,Cy,bom test,description longer than ten,api
