@@ -1,0 +1,75 @@
+@host = http://localhost:3000
+
+### Health
+GET {{host}}/health
+
+### Create ticket
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_id": "C-1",
+  "customer_email": "a@b.co",
+  "customer_name": "Ada",
+  "subject": "Cannot login",
+  "description": "I cannot sign in for two days",
+  "metadata": { "source": "web_form" }
+}
+
+### Create ticket with auto-classify
+POST {{host}}/tickets?auto_classify=true
+Content-Type: application/json
+
+{
+  "customer_id": "C-2",
+  "customer_email": "c@d.co",
+  "customer_name": "Bob",
+  "subject": "Charged twice",
+  "description": "Production down — please refund the duplicate billing",
+  "metadata": { "source": "email" }
+}
+
+### List with filters
+GET {{host}}/tickets?category=billing_question&priority=high
+
+### Get one (replace :id)
+GET {{host}}/tickets/REPLACE_WITH_ID
+
+### Update
+PUT {{host}}/tickets/REPLACE_WITH_ID
+Content-Type: application/json
+
+{ "status": "in_progress", "assigned_to": "agent-7" }
+
+### Auto-classify
+POST {{host}}/tickets/REPLACE_WITH_ID/auto-classify
+
+### Delete
+DELETE {{host}}/tickets/REPLACE_WITH_ID
+
+### Import CSV
+POST {{host}}/tickets/import?format=csv
+Content-Type: text/csv
+
+< ./sample_tickets.csv
+
+### Import JSON
+POST {{host}}/tickets/import?format=json
+Content-Type: application/json
+
+< ./sample_tickets.json
+
+### Import XML
+POST {{host}}/tickets/import?format=xml
+Content-Type: application/xml
+
+< ./sample_tickets.xml
+
+### Validation 400
+POST {{host}}/tickets
+Content-Type: application/json
+
+{ "customer_email": "nope" }
+
+### Not found 404
+GET {{host}}/tickets/non-existent
