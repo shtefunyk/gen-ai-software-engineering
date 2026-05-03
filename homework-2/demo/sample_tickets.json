@@ -1,0 +1,242 @@
+[
+  {
+    "customer_id": "C-0001",
+    "customer_email": "user1@example.com",
+    "customer_name": "Customer 1",
+    "subject": "Charged twice",
+    "description": "Production down — please refund the duplicate billing (case 1)",
+    "metadata": {
+      "source": "email",
+      "browser": "Mozilla/5.0",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "C-0002",
+    "customer_email": "user2@example.com",
+    "customer_name": "Customer 2",
+    "subject": "App crashes",
+    "description": "The mobile app crashes on the dashboard screen (case 2)",
+    "metadata": {
+      "source": "api",
+      "browser": "Mozilla/5.0",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "C-0003",
+    "customer_email": "user3@example.com",
+    "customer_name": "Customer 3",
+    "subject": "Feature suggestion",
+    "description": "Please add dark mode (case 3)",
+    "metadata": {
+      "source": "chat",
+      "browser": "Mozilla/5.0",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "C-0004",
+    "customer_email": "user4@example.com",
+    "customer_name": "Customer 4",
+    "subject": "Bug: typo on settings",
+    "description": "Minor cosmetic issue on the settings page (case 4)",
+    "metadata": {
+      "source": "phone",
+      "browser": "Mozilla/5.0",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "C-0005",
+    "customer_email": "user5@example.com",
+    "customer_name": "Customer 5",
+    "subject": "Account suspended",
+    "description": "My account is suspended without warning — security (case 5)",
+    "metadata": {
+      "source": "web_form",
+      "browser": "Mozilla/5.0",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "C-0006",
+    "customer_email": "user6@example.com",
+    "customer_name": "Customer 6",
+    "subject": "Cannot login",
+    "description": "I cannot sign in for two days (case 6)",
+    "metadata": {
+      "source": "email",
+      "browser": "Mozilla/5.0",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "C-0007",
+    "customer_email": "user7@example.com",
+    "customer_name": "Customer 7",
+    "subject": "Charged twice",
+    "description": "Production down — please refund the duplicate billing (case 7)",
+    "metadata": {
+      "source": "api",
+      "browser": "Mozilla/5.0",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "C-0008",
+    "customer_email": "user8@example.com",
+    "customer_name": "Customer 8",
+    "subject": "App crashes",
+    "description": "The mobile app crashes on the dashboard screen (case 8)",
+    "metadata": {
+      "source": "chat",
+      "browser": "Mozilla/5.0",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "C-0009",
+    "customer_email": "user9@example.com",
+    "customer_name": "Customer 9",
+    "subject": "Feature suggestion",
+    "description": "Please add dark mode (case 9)",
+    "metadata": {
+      "source": "phone",
+      "browser": "Mozilla/5.0",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "C-0010",
+    "customer_email": "user10@example.com",
+    "customer_name": "Customer 10",
+    "subject": "Bug: typo on settings",
+    "description": "Minor cosmetic issue on the settings page (case 10)",
+    "metadata": {
+      "source": "web_form",
+      "browser": "Mozilla/5.0",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "C-0011",
+    "customer_email": "user11@example.com",
+    "customer_name": "Customer 11",
+    "subject": "Account suspended",
+    "description": "My account is suspended without warning — security (case 11)",
+    "metadata": {
+      "source": "email",
+      "browser": "Mozilla/5.0",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "C-0012",
+    "customer_email": "user12@example.com",
+    "customer_name": "Customer 12",
+    "subject": "Cannot login",
+    "description": "I cannot sign in for two days (case 12)",
+    "metadata": {
+      "source": "api",
+      "browser": "Mozilla/5.0",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "C-0013",
+    "customer_email": "user13@example.com",
+    "customer_name": "Customer 13",
+    "subject": "Charged twice",
+    "description": "Production down — please refund the duplicate billing (case 13)",
+    "metadata": {
+      "source": "chat",
+      "browser": "Mozilla/5.0",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "C-0014",
+    "customer_email": "user14@example.com",
+    "customer_name": "Customer 14",
+    "subject": "App crashes",
+    "description": "The mobile app crashes on the dashboard screen (case 14)",
+    "metadata": {
+      "source": "phone",
+      "browser": "Mozilla/5.0",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "C-0015",
+    "customer_email": "user15@example.com",
+    "customer_name": "Customer 15",
+    "subject": "Feature suggestion",
+    "description": "Please add dark mode (case 15)",
+    "metadata": {
+      "source": "web_form",
+      "browser": "Mozilla/5.0",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "C-0016",
+    "customer_email": "user16@example.com",
+    "customer_name": "Customer 16",
+    "subject": "Bug: typo on settings",
+    "description": "Minor cosmetic issue on the settings page (case 16)",
+    "metadata": {
+      "source": "email",
+      "browser": "Mozilla/5.0",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "C-0017",
+    "customer_email": "user17@example.com",
+    "customer_name": "Customer 17",
+    "subject": "Account suspended",
+    "description": "My account is suspended without warning — security (case 17)",
+    "metadata": {
+      "source": "api",
+      "browser": "Mozilla/5.0",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "C-0018",
+    "customer_email": "user18@example.com",
+    "customer_name": "Customer 18",
+    "subject": "Cannot login",
+    "description": "I cannot sign in for two days (case 18)",
+    "metadata": {
+      "source": "chat",
+      "browser": "Mozilla/5.0",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "C-0019",
+    "customer_email": "user19@example.com",
+    "customer_name": "Customer 19",
+    "subject": "Charged twice",
+    "description": "Production down — please refund the duplicate billing (case 19)",
+    "metadata": {
+      "source": "phone",
+      "browser": "Mozilla/5.0",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "C-0020",
+    "customer_email": "user20@example.com",
+    "customer_name": "Customer 20",
+    "subject": "App crashes",
+    "description": "The mobile app crashes on the dashboard screen (case 20)",
+    "metadata": {
+      "source": "web_form",
+      "browser": "Mozilla/5.0",
+      "device_type": "tablet"
+    }
+  }
+]

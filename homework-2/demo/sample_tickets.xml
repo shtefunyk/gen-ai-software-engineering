@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_id>C-0001</customer_id>
+    <customer_email>user1@example.com</customer_email>
+    <customer_name>Customer 1</customer_name>
+    <subject>Charged twice</subject>
+    <description>Production down — please refund the duplicate billing (case 1)</description>
+    <metadata>
+      <source>email</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0002</customer_id>
+    <customer_email>user2@example.com</customer_email>
+    <customer_name>Customer 2</customer_name>
+    <subject>App crashes</subject>
+    <description>The mobile app crashes on the dashboard screen (case 2)</description>
+    <metadata>
+      <source>api</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0003</customer_id>
+    <customer_email>user3@example.com</customer_email>
+    <customer_name>Customer 3</customer_name>
+    <subject>Feature suggestion</subject>
+    <description>Please add dark mode (case 3)</description>
+    <metadata>
+      <source>chat</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0004</customer_id>
+    <customer_email>user4@example.com</customer_email>
+    <customer_name>Customer 4</customer_name>
+    <subject>Bug: typo on settings</subject>
+    <description>Minor cosmetic issue on the settings page (case 4)</description>
+    <metadata>
+      <source>phone</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0005</customer_id>
+    <customer_email>user5@example.com</customer_email>
+    <customer_name>Customer 5</customer_name>
+    <subject>Account suspended</subject>
+    <description>My account is suspended without warning — security (case 5)</description>
+    <metadata>
+      <source>web_form</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0006</customer_id>
+    <customer_email>user6@example.com</customer_email>
+    <customer_name>Customer 6</customer_name>
+    <subject>Cannot login</subject>
+    <description>I cannot sign in for two days (case 6)</description>
+    <metadata>
+      <source>email</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0007</customer_id>
+    <customer_email>user7@example.com</customer_email>
+    <customer_name>Customer 7</customer_name>
+    <subject>Charged twice</subject>
+    <description>Production down — please refund the duplicate billing (case 7)</description>
+    <metadata>
+      <source>api</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0008</customer_id>
+    <customer_email>user8@example.com</customer_email>
+    <customer_name>Customer 8</customer_name>
+    <subject>App crashes</subject>
+    <description>The mobile app crashes on the dashboard screen (case 8)</description>
+    <metadata>
+      <source>chat</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0009</customer_id>
+    <customer_email>user9@example.com</customer_email>
+    <customer_name>Customer 9</customer_name>
+    <subject>Feature suggestion</subject>
+    <description>Please add dark mode (case 9)</description>
+    <metadata>
+      <source>phone</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0010</customer_id>
+    <customer_email>user10@example.com</customer_email>
+    <customer_name>Customer 10</customer_name>
+    <subject>Bug: typo on settings</subject>
+    <description>Minor cosmetic issue on the settings page (case 10)</description>
+    <metadata>
+      <source>web_form</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0011</customer_id>
+    <customer_email>user11@example.com</customer_email>
+    <customer_name>Customer 11</customer_name>
+    <subject>Account suspended</subject>
+    <description>My account is suspended without warning — security (case 11)</description>
+    <metadata>
+      <source>email</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0012</customer_id>
+    <customer_email>user12@example.com</customer_email>
+    <customer_name>Customer 12</customer_name>
+    <subject>Cannot login</subject>
+    <description>I cannot sign in for two days (case 12)</description>
+    <metadata>
+      <source>api</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0013</customer_id>
+    <customer_email>user13@example.com</customer_email>
+    <customer_name>Customer 13</customer_name>
+    <subject>Charged twice</subject>
+    <description>Production down — please refund the duplicate billing (case 13)</description>
+    <metadata>
+      <source>chat</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0014</customer_id>
+    <customer_email>user14@example.com</customer_email>
+    <customer_name>Customer 14</customer_name>
+    <subject>App crashes</subject>
+    <description>The mobile app crashes on the dashboard screen (case 14)</description>
+    <metadata>
+      <source>phone</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0015</customer_id>
+    <customer_email>user15@example.com</customer_email>
+    <customer_name>Customer 15</customer_name>
+    <subject>Feature suggestion</subject>
+    <description>Please add dark mode (case 15)</description>
+    <metadata>
+      <source>web_form</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0016</customer_id>
+    <customer_email>user16@example.com</customer_email>
+    <customer_name>Customer 16</customer_name>
+    <subject>Bug: typo on settings</subject>
+    <description>Minor cosmetic issue on the settings page (case 16)</description>
+    <metadata>
+      <source>email</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0017</customer_id>
+    <customer_email>user17@example.com</customer_email>
+    <customer_name>Customer 17</customer_name>
+    <subject>Account suspended</subject>
+    <description>My account is suspended without warning — security (case 17)</description>
+    <metadata>
+      <source>api</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0018</customer_id>
+    <customer_email>user18@example.com</customer_email>
+    <customer_name>Customer 18</customer_name>
+    <subject>Cannot login</subject>
+    <description>I cannot sign in for two days (case 18)</description>
+    <metadata>
+      <source>chat</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0019</customer_id>
+    <customer_email>user19@example.com</customer_email>
+    <customer_name>Customer 19</customer_name>
+    <subject>Charged twice</subject>
+    <description>Production down — please refund the duplicate billing (case 19)</description>
+    <metadata>
+      <source>phone</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0020</customer_id>
+    <customer_email>user20@example.com</customer_email>
+    <customer_name>Customer 20</customer_name>
+    <subject>App crashes</subject>
+    <description>The mobile app crashes on the dashboard screen (case 20)</description>
+    <metadata>
+      <source>web_form</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0021</customer_id>
+    <customer_email>user21@example.com</customer_email>
+    <customer_name>Customer 21</customer_name>
+    <subject>Feature suggestion</subject>
+    <description>Please add dark mode (case 21)</description>
+    <metadata>
+      <source>email</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0022</customer_id>
+    <customer_email>user22@example.com</customer_email>
+    <customer_name>Customer 22</customer_name>
+    <subject>Bug: typo on settings</subject>
+    <description>Minor cosmetic issue on the settings page (case 22)</description>
+    <metadata>
+      <source>api</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0023</customer_id>
+    <customer_email>user23@example.com</customer_email>
+    <customer_name>Customer 23</customer_name>
+    <subject>Account suspended</subject>
+    <description>My account is suspended without warning — security (case 23)</description>
+    <metadata>
+      <source>chat</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0024</customer_id>
+    <customer_email>user24@example.com</customer_email>
+    <customer_name>Customer 24</customer_name>
+    <subject>Cannot login</subject>
+    <description>I cannot sign in for two days (case 24)</description>
+    <metadata>
+      <source>phone</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0025</customer_id>
+    <customer_email>user25@example.com</customer_email>
+    <customer_name>Customer 25</customer_name>
+    <subject>Charged twice</subject>
+    <description>Production down — please refund the duplicate billing (case 25)</description>
+    <metadata>
+      <source>web_form</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0026</customer_id>
+    <customer_email>user26@example.com</customer_email>
+    <customer_name>Customer 26</customer_name>
+    <subject>App crashes</subject>
+    <description>The mobile app crashes on the dashboard screen (case 26)</description>
+    <metadata>
+      <source>email</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0027</customer_id>
+    <customer_email>user27@example.com</customer_email>
+    <customer_name>Customer 27</customer_name>
+    <subject>Feature suggestion</subject>
+    <description>Please add dark mode (case 27)</description>
+    <metadata>
+      <source>api</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0028</customer_id>
+    <customer_email>user28@example.com</customer_email>
+    <customer_name>Customer 28</customer_name>
+    <subject>Bug: typo on settings</subject>
+    <description>Minor cosmetic issue on the settings page (case 28)</description>
+    <metadata>
+      <source>chat</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0029</customer_id>
+    <customer_email>user29@example.com</customer_email>
+    <customer_name>Customer 29</customer_name>
+    <subject>Account suspended</subject>
+    <description>My account is suspended without warning — security (case 29)</description>
+    <metadata>
+      <source>phone</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>C-0030</customer_id>
+    <customer_email>user30@example.com</customer_email>
+    <customer_name>Customer 30</customer_name>
+    <subject>Cannot login</subject>
+    <description>I cannot sign in for two days (case 30)</description>
+    <metadata>
+      <source>web_form</source>
+      <browser>Mozilla/5.0</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+</tickets>

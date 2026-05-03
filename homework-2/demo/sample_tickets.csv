@@ -1,0 +1,51 @@
+customer_id,customer_email,customer_name,subject,description,metadata.source,metadata.browser,metadata.device_type
+C-0001,user1@example.com,Customer 1,"Charged twice","Production down — please refund the duplicate billing (case 1)",email,Mozilla/5.0,mobile
+C-0002,user2@example.com,Customer 2,"App crashes","The mobile app crashes on the dashboard screen (case 2)",api,Mozilla/5.0,tablet
+C-0003,user3@example.com,Customer 3,"Feature suggestion","Please add dark mode (case 3)",chat,Mozilla/5.0,desktop
+C-0004,user4@example.com,Customer 4,"Bug: typo on settings","Minor cosmetic issue on the settings page (case 4)",phone,Mozilla/5.0,mobile
+C-0005,user5@example.com,Customer 5,"Account suspended","My account is suspended without warning — security (case 5)",web_form,Mozilla/5.0,tablet
+C-0006,user6@example.com,Customer 6,"Cannot login","I cannot sign in for two days (case 6)",email,Mozilla/5.0,desktop
+C-0007,user7@example.com,Customer 7,"Charged twice","Production down — please refund the duplicate billing (case 7)",api,Mozilla/5.0,mobile
+C-0008,user8@example.com,Customer 8,"App crashes","The mobile app crashes on the dashboard screen (case 8)",chat,Mozilla/5.0,tablet
+C-0009,user9@example.com,Customer 9,"Feature suggestion","Please add dark mode (case 9)",phone,Mozilla/5.0,desktop
+C-0010,user10@example.com,Customer 10,"Bug: typo on settings","Minor cosmetic issue on the settings page (case 10)",web_form,Mozilla/5.0,mobile
+C-0011,user11@example.com,Customer 11,"Account suspended","My account is suspended without warning — security (case 11)",email,Mozilla/5.0,tablet
+C-0012,user12@example.com,Customer 12,"Cannot login","I cannot sign in for two days (case 12)",api,Mozilla/5.0,desktop
+C-0013,user13@example.com,Customer 13,"Charged twice","Production down — please refund the duplicate billing (case 13)",chat,Mozilla/5.0,mobile
+C-0014,user14@example.com,Customer 14,"App crashes","The mobile app crashes on the dashboard screen (case 14)",phone,Mozilla/5.0,tablet
+C-0015,user15@example.com,Customer 15,"Feature suggestion","Please add dark mode (case 15)",web_form,Mozilla/5.0,desktop
+C-0016,user16@example.com,Customer 16,"Bug: typo on settings","Minor cosmetic issue on the settings page (case 16)",email,Mozilla/5.0,mobile
+C-0017,user17@example.com,Customer 17,"Account suspended","My account is suspended without warning — security (case 17)",api,Mozilla/5.0,tablet
+C-0018,user18@example.com,Customer 18,"Cannot login","I cannot sign in for two days (case 18)",chat,Mozilla/5.0,desktop
+C-0019,user19@example.com,Customer 19,"Charged twice","Production down — please refund the duplicate billing (case 19)",phone,Mozilla/5.0,mobile
+C-0020,user20@example.com,Customer 20,"App crashes","The mobile app crashes on the dashboard screen (case 20)",web_form,Mozilla/5.0,tablet
+C-0021,user21@example.com,Customer 21,"Feature suggestion","Please add dark mode (case 21)",email,Mozilla/5.0,desktop
+C-0022,user22@example.com,Customer 22,"Bug: typo on settings","Minor cosmetic issue on the settings page (case 22)",api,Mozilla/5.0,mobile
+C-0023,user23@example.com,Customer 23,"Account suspended","My account is suspended without warning — security (case 23)",chat,Mozilla/5.0,tablet
+C-0024,user24@example.com,Customer 24,"Cannot login","I cannot sign in for two days (case 24)",phone,Mozilla/5.0,desktop
+C-0025,user25@example.com,Customer 25,"Charged twice","Production down — please refund the duplicate billing (case 25)",web_form,Mozilla/5.0,mobile
+C-0026,user26@example.com,Customer 26,"App crashes","The mobile app crashes on the dashboard screen (case 26)",email,Mozilla/5.0,tablet
+C-0027,user27@example.com,Customer 27,"Feature suggestion","Please add dark mode (case 27)",api,Mozilla/5.0,desktop
+C-0028,user28@example.com,Customer 28,"Bug: typo on settings","Minor cosmetic issue on the settings page (case 28)",chat,Mozilla/5.0,mobile
+C-0029,user29@example.com,Customer 29,"Account suspended","My account is suspended without warning — security (case 29)",phone,Mozilla/5.0,tablet
+C-0030,user30@example.com,Customer 30,"Cannot login","I cannot sign in for two days (case 30)",web_form,Mozilla/5.0,desktop
+C-0031,user31@example.com,Customer 31,"Charged twice","Production down — please refund the duplicate billing (case 31)",email,Mozilla/5.0,mobile
+C-0032,user32@example.com,Customer 32,"App crashes","The mobile app crashes on the dashboard screen (case 32)",api,Mozilla/5.0,tablet
+C-0033,user33@example.com,Customer 33,"Feature suggestion","Please add dark mode (case 33)",chat,Mozilla/5.0,desktop
+C-0034,user34@example.com,Customer 34,"Bug: typo on settings","Minor cosmetic issue on the settings page (case 34)",phone,Mozilla/5.0,mobile
+C-0035,user35@example.com,Customer 35,"Account suspended","My account is suspended without warning — security (case 35)",web_form,Mozilla/5.0,tablet
+C-0036,user36@example.com,Customer 36,"Cannot login","I cannot sign in for two days (case 36)",email,Mozilla/5.0,desktop
+C-0037,user37@example.com,Customer 37,"Charged twice","Production down — please refund the duplicate billing (case 37)",api,Mozilla/5.0,mobile
+C-0038,user38@example.com,Customer 38,"App crashes","The mobile app crashes on the dashboard screen (case 38)",chat,Mozilla/5.0,tablet
+C-0039,user39@example.com,Customer 39,"Feature suggestion","Please add dark mode (case 39)",phone,Mozilla/5.0,desktop
+C-0040,user40@example.com,Customer 40,"Bug: typo on settings","Minor cosmetic issue on the settings page (case 40)",web_form,Mozilla/5.0,mobile
+C-0041,user41@example.com,Customer 41,"Account suspended","My account is suspended without warning — security (case 41)",email,Mozilla/5.0,tablet
+C-0042,user42@example.com,Customer 42,"Cannot login","I cannot sign in for two days (case 42)",api,Mozilla/5.0,desktop
+C-0043,user43@example.com,Customer 43,"Charged twice","Production down — please refund the duplicate billing (case 43)",chat,Mozilla/5.0,mobile
+C-0044,user44@example.com,Customer 44,"App crashes","The mobile app crashes on the dashboard screen (case 44)",phone,Mozilla/5.0,tablet
+C-0045,user45@example.com,Customer 45,"Feature suggestion","Please add dark mode (case 45)",web_form,Mozilla/5.0,desktop
+C-0046,user46@example.com,Customer 46,"Bug: typo on settings","Minor cosmetic issue on the settings page (case 46)",email,Mozilla/5.0,mobile
+C-0047,user47@example.com,Customer 47,"Account suspended","My account is suspended without warning — security (case 47)",api,Mozilla/5.0,tablet
+C-0048,user48@example.com,Customer 48,"Cannot login","I cannot sign in for two days (case 48)",chat,Mozilla/5.0,desktop
+C-0049,user49@example.com,Customer 49,"Charged twice","Production down — please refund the duplicate billing (case 49)",phone,Mozilla/5.0,mobile
+C-0050,user50@example.com,Customer 50,"App crashes","The mobile app crashes on the dashboard screen (case 50)",web_form,Mozilla/5.0,tablet
