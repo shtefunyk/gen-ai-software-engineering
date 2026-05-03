@@ -1,0 +1,28 @@
+[
+  {
+    "fromAccount": "ACC-ALICE",
+    "toAccount": "ACC-BOB01",
+    "amount": 500.00,
+    "currency": "USD",
+    "type": "transfer"
+  },
+  {
+    "toAccount": "ACC-ALICE",
+    "amount": 1000.00,
+    "currency": "USD",
+    "type": "deposit"
+  },
+  {
+    "fromAccount": "ACC-BOB01",
+    "amount": 200.00,
+    "currency": "USD",
+    "type": "withdrawal"
+  },
+  {
+    "fromAccount": "ACC-ALICE",
+    "toAccount": "ACC-CAROL",
+    "amount": 75.50,
+    "currency": "EUR",
+    "type": "transfer"
+  }
+]

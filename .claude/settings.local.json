@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /Users/bodya0111/Desktop/gen-ai-software-engineering log --oneline -10)",
+      "Bash(git checkout *)",
+      "Bash(npm install *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(node -e ' *)",
+      "Bash(npx jest *)",
+      "Bash(timeout 3 node src/index.js)",
+      "Bash(curl -s http://localhost:3000/transactions)",
+      "Bash(pkill -f \"node src/index.js\")",
+      "Bash(node src/index.js)",
+      "Bash(npm test *)",
+      "Bash(git -C /Users/bodya0111/Desktop/gen-ai-software-engineering add homework-1/src/routes/accounts.js homework-1/tests/accounts.test.js)",
+      "Bash(git -C /Users/bodya0111/Desktop/gen-ai-software-engineering commit -m ' *)",
+      "Bash(chmod +x /Users/bodya0111/Desktop/gen-ai-software-engineering/homework-1/demo/run.sh)",
+      "Bash(git push *)",
+      "Bash(gh pr create --title 'Homework 1: Banking Transactions API \\(Node.js + Express\\)' --base main --body ' *)",
+      "Bash(brew list *)",
+      "Read(//usr/local/bin/**)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(chmod 777 *)",
+      "Bash(mkfs *)",
+      "Bash(dd *)",
+      "Bash(git push --force *)",
+      "Bash(git reset --hard *)"
+    ],
+    "defaultMode": "bypassPermissions"
+  }
+}
