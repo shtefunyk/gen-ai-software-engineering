@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash homework-3/.claude/hooks/pan-guard.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'lines=$(wc -l < homework-3/specification.md 2>/dev/null || echo 0); if [ \"$lines\" -gt 500 ]; then echo \"BLOCK: specification.md is $lines lines; hard cap is 500. Compress tables, move content to agents.md, or cut. See CLAUDE.md §2.\" >&2; exit 2; fi'"
+          }
+        ]
+      }
+    ]
+  }
+}
