@@ -1,0 +1,3 @@
+customer_id,customer_email,customer_name,subject,description,metadata.source
+C-1,a@b.co,Ada,login broken,cannot sign in for two days,web_form
+C-2,not-an-email,Bob,billing,charged twice for the plan,email
