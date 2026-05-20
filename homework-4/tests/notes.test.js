@@ -51,7 +51,9 @@ describe('GET /notes/:id/backup (SECURITY: path traversal)', () => {
 
   it('rejects path traversal attempts', async () => {
     await seed([{ title: 'one' }]);
-    const res = await request(app).get('/notes/1/backup?file=../../package.json');
+    // `../package.json` escapes data/ into homework-4/package.json (a real,
+    // readable file outside the intended dir) — proves the traversal.
+    const res = await request(app).get('/notes/1/backup?file=../package.json');
     expect(res.status).toBe(400);
     expect(res.text).not.toContain('homework-4-notes-api');
   });
