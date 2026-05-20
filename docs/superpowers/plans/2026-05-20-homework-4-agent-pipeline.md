@@ -398,7 +398,7 @@ All tests in `tests/notes.test.js` pass.
 > every file:line reference below.
 
 ## Finding 1 — Pagination returns nothing (BUG 2)
-- **Location:** `src/store.js:30-33`
+- **Location:** `src/store.js:33-35`
 - **Snippet:**
   ```js
   const off = parseInt(offset);
@@ -408,7 +408,7 @@ All tests in `tests/notes.test.js` pass.
 - **Cause:** `parseInt(undefined)` is `NaN`; `slice(NaN, NaN)` returns `[]`.
 
 ## Finding 2 — Tag filter never matches (BUG 1)
-- **Location:** `src/store.js:23`
+- **Location:** `src/store.js:27`
 - **Snippet:**
   ```js
   result = result.filter((n) => n.title == tag);
