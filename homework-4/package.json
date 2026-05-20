@@ -1,0 +1,20 @@
+{
+  "name": "homework-4-notes-api",
+  "version": "1.0.0",
+  "description": "Notes API operated on by the 4-agent pipeline",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pipeline": "./run-pipeline.sh"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "supertest": "^6.3.4",
+    "vitest": "^1.6.0"
+  }
+}
