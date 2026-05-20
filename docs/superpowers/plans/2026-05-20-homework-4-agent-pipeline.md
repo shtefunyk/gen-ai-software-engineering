@@ -841,7 +841,11 @@ if [ ! -f context/bugs/001-notes-api/research/codebase-research.md ]; then
 fi
 
 echo "▶ Starting 4-agent pipeline via /run-pipeline ..."
-claude -p "/run-pipeline"
+# Headless (-p) cannot answer permission prompts, so grant the tools the agents
+# need (file writes + Bash for npm test). Local sandbox, no network tools.
+claude -p "/run-pipeline" \
+  --permission-mode acceptEdits \
+  --allowedTools "Bash Read Write Edit Glob Grep"
 echo "✔ Pipeline finished. See context/bugs/001-notes-api/*.md for artifacts."
 ```
 
