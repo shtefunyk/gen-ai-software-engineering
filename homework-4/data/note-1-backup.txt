@@ -1,0 +1,2 @@
+Backup of note #1
+This file lives inside data/ and is the only legitimate backup target.
