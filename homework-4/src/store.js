@@ -24,15 +24,17 @@ export function listNotes({ tag, limit, offset }) {
   if (tag !== undefined) {
     // BUG 1: filters on the wrong property (`title`) with loose `==`,
     // so tag filtering never works as intended.
-    result = result.filter((n) => n.title == tag);
+    result = result.filter((n) => n.tag === tag);
   }
 
   // BUG 2: no defaults / NaN / negative guards. With no params,
   // parseInt(undefined) === NaN and slice(NaN, NaN) returns [] —
   // so a plain GET /notes returns nothing.
-  const off = parseInt(offset);
-  const lim = parseInt(limit);
-  return result.slice(off, off + lim);
+  const parsedOff = Number.parseInt(offset, 10);
+  const parsedLim = Number.parseInt(limit, 10);
+  const off = Number.isFinite(parsedOff) && parsedOff >= 0 ? parsedOff : 0;
+  const end = Number.isFinite(parsedLim) && parsedLim >= 0 ? off + parsedLim : result.length;
+  return result.slice(off, end);
 }
 
 export function deleteNote(id) {

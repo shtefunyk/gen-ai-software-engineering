@@ -38,7 +38,10 @@ export function createApp() {
   // no validation, so `?file=../../package.json` escapes the data directory.
   app.get('/notes/:id/backup', (req, res) => {
     const file = req.query.file;
-    const full = path.join(dataDir, String(file));
+    const full = path.resolve(dataDir, String(file));
+    if (!full.startsWith(dataDir + path.sep)) {
+      return res.status(400).json({ error: 'invalid file path' });
+    }
     readFile(full, 'utf8', (err, data) => {
       if (err) return res.status(404).json({ error: 'backup not found' });
       res.type('text/plain').send(data);
