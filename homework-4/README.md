@@ -1,6 +1,6 @@
 # Homework 4 — 4-Agent Pipeline
 
-**Author / Student:** <ВАШЕ ІМʼЯ — заповніть перед PR, як вимагає кореневий README>
+**Author / Student:** Bohdan Shtefunyk
 
 A Claude Code pipeline of four agents that verifies research, fixes bugs, reviews
 security, and generates tests for a small Express **Notes API**.
