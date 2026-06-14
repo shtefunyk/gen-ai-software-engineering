@@ -31,14 +31,26 @@ python3.13 -m venv .venv
 
 ## 2. Set the environment (GitHub token)
 
-The token is **not** stored in any file — it is read from your logged-in `gh`:
+You do **not** create or copy a token by hand. You are already logged into the
+`gh` CLI, so `gh auth token` *is* your token. It is never written to a repo file;
+`.mcp.json` only references `${GITHUB_TOKEN}`.
+
+The robust way (works on every Claude Code launch) — add one line to `~/.zshrc`:
 
 ```bash
-export GITHUB_TOKEN=$(gh auth token)
+echo 'export GITHUB_TOKEN=$(gh auth token 2>/dev/null)' >> ~/.zshrc
+source ~/.zshrc        # or just open a new terminal
 ```
 
-> Do this in the same shell from which you launch Claude Code, so the
-> `${GITHUB_TOKEN}` placeholder in `.mcp.json` expands. See `.env.example`.
+Verify a new shell has it (prints a `gho_…` prefix, not empty):
+
+```bash
+zsh -ic 'echo ${GITHUB_TOKEN:0:4}'
+```
+
+> One-off alternative (must be the same shell you launch Claude Code from):
+> `export GITHUB_TOKEN=$(gh auth token)`. The `.zshrc` line is preferred so the
+> token is present even after restarts. See `.env.example`.
 
 Notion needs no token here (browser OAuth in step 4).
 

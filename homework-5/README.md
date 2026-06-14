@@ -77,9 +77,18 @@ custom-mcp-server/.venv/bin/python custom-mcp-server/test_server.py
 
 ## 📸 Screenshots
 
+All four servers registered and `✔ connected` in the `/mcp` panel:
+
+![MCP servers overview](docs/screenshots/mcp-servers-overview.png)
+
 | GitHub MCP | Filesystem MCP |
 |---|---|
 | ![GitHub MCP](docs/screenshots/github-mcp-result.png) | ![Filesystem MCP](docs/screenshots/filesystem-mcp-result.png) |
+
+> The GitHub (Demo #3) and Filesystem (Demo #2) calls were captured in one
+> terminal frame, so both images above show the same combined screenshot —
+> the filesystem directory listing at the top and the GitHub PR/commit results
+> below it.
 
 | Notion MCP (last 5 bugs) | Custom `read` tool |
 |---|---|
