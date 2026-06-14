@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/bodya0111/Desktop/gen-ai-software-engineering"
+      ]
+    },
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "lorem-custom": {
+      "command": "/Users/bodya0111/Desktop/gen-ai-software-engineering/homework-5/custom-mcp-server/.venv/bin/python",
+      "args": [
+        "/Users/bodya0111/Desktop/gen-ai-software-engineering/homework-5/custom-mcp-server/server.py"
+      ]
+    }
+  }
+}

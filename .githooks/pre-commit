@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# Secret guard — blocks a commit if staged changes look like they contain
+# an API key / token. Lives in .githooks/ and is wired via core.hooksPath.
+#
+# Added for homework-5 (MCP servers) where GitHub / Notion tokens are in play.
+set -euo pipefail
+
+# Patterns for common token formats. Keep these tight to avoid false positives.
+PATTERNS=(
+  'gh[pousr]_[A-Za-z0-9]{36,}'        # GitHub PAT / OAuth / server / refresh
+  'github_pat_[A-Za-z0-9_]{22,}'      # GitHub fine-grained PAT
+  'ntn_[A-Za-z0-9]{40,}'              # Notion integration token (new format)
+  'secret_[A-Za-z0-9]{40,}'           # Notion integration token (legacy)
+  'AKIA[0-9A-Z]{16}'                  # AWS access key id
+  'xox[baprs]-[A-Za-z0-9-]{10,}'      # Slack token
+)
+
+# Only look at lines being ADDED, and ignore this hook file itself.
+ADDED="$(git diff --cached --no-color -U0 -- . ':(exclude).githooks/pre-commit' \
+          | grep -E '^\+' | grep -Ev '^\+\+\+' || true)"
+
+HITS=""
+for pat in "${PATTERNS[@]}"; do
+  match="$(printf '%s\n' "$ADDED" | grep -En "$pat" || true)"
+  if [ -n "$match" ]; then
+    HITS="${HITS}\n[pattern: ${pat}]\n${match}"
+  fi
+done
+
+if [ -n "$HITS" ]; then
+  echo "❌ Коміт заблоковано: staged-зміни схожі на секрет/токен." >&2
+  echo -e "$HITS" >&2
+  echo "" >&2
+  echo "Прибери секрет (використовуй \${ENV_VAR} замість значення)." >&2
+  echo "Якщо це хибне спрацювання — обійти: git commit --no-verify" >&2
+  exit 1
+fi
+
+exit 0
