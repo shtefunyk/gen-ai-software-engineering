@@ -335,7 +335,9 @@ describe('GET /notes/:id/backup (SECURITY: path traversal)', () => {
 
   it('rejects path traversal attempts', async () => {
     await seed([{ title: 'one' }]);
-    const res = await request(app).get('/notes/1/backup?file=../../package.json');
+    // `../package.json` escapes data/ into homework-4/package.json (a real,
+    // readable file outside the intended dir) — proves the traversal.
+    const res = await request(app).get('/notes/1/backup?file=../package.json');
     expect(res.status).toBe(400);
     expect(res.text).not.toContain('homework-4-notes-api');
   });
@@ -396,7 +398,7 @@ All tests in `tests/notes.test.js` pass.
 > every file:line reference below.
 
 ## Finding 1 — Pagination returns nothing (BUG 2)
-- **Location:** `src/store.js:30-33`
+- **Location:** `src/store.js:33-35`
 - **Snippet:**
   ```js
   const off = parseInt(offset);
@@ -406,7 +408,7 @@ All tests in `tests/notes.test.js` pass.
 - **Cause:** `parseInt(undefined)` is `NaN`; `slice(NaN, NaN)` returns `[]`.
 
 ## Finding 2 — Tag filter never matches (BUG 1)
-- **Location:** `src/store.js:23`
+- **Location:** `src/store.js:27`
 - **Snippet:**
   ```js
   result = result.filter((n) => n.title == tag);
@@ -839,7 +841,11 @@ if [ ! -f context/bugs/001-notes-api/research/codebase-research.md ]; then
 fi
 
 echo "▶ Starting 4-agent pipeline via /run-pipeline ..."
-claude -p "/run-pipeline"
+# Headless (-p) cannot answer permission prompts, so grant the tools the agents
+# need (file writes + Bash for npm test). Local sandbox, no network tools.
+claude -p "/run-pipeline" \
+  --permission-mode acceptEdits \
+  --allowedTools "Bash Read Write Edit Glob Grep"
 echo "✔ Pipeline finished. See context/bugs/001-notes-api/*.md for artifacts."
 ```
 
