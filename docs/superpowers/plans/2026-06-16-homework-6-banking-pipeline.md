@@ -460,7 +460,9 @@ Expected: PASS (7 passed).
 
 - [ ] **Step 5: Sanity-check the dry-run CLI**
 
-Run: `.venv/bin/python agents/transaction_validator.py --dry-run`
+Run: `.venv/bin/python -m agents.transaction_validator --dry-run` (run as a module from
+`homework-6/`; a bare `python agents/transaction_validator.py` fails because the script lives inside
+the `agents/` package and would put `agents/` — not the project root — on `sys.path`).
 Expected: TXN006 (XYZ) and TXN007 (-100.00) marked ❌; total 8 | valid 6 | invalid 2.
 
 - [ ] **Step 6: Commit**
@@ -1385,7 +1387,7 @@ description: Validate transactions without running the full pipeline
 Validate all transactions in sample-transactions.json without processing them.
 
 Steps:
-1. Run the validator in dry-run mode: `.venv/bin/python agents/transaction_validator.py --dry-run`
+1. Run the validator in dry-run mode: `.venv/bin/python -m agents.transaction_validator --dry-run`
 2. Report: total count, valid count, invalid count, and reasons for rejection.
 3. Show the per-transaction results.
 ```
@@ -1571,7 +1573,7 @@ All commands run from the `homework-6/` directory.
    ```
 2. Validate transactions only (dry-run):
    ```bash
-   .venv/bin/python agents/transaction_validator.py --dry-run
+   .venv/bin/python -m agents.transaction_validator --dry-run
    ```
 3. Run the full pipeline:
    ```bash
