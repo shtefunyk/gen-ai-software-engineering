@@ -28,7 +28,8 @@ All paths relative to repo root. Claude Code / commands are launched from `homew
 | `homework-6/agents/fraud_detector.py` | risk scoring + review flags |
 | `homework-6/agents/compliance_checker.py` | AML/sanctions + final disposition |
 | `homework-6/integrator.py` | sequential orchestrator (`Pipeline`) + CLI entry point |
-| `homework-6/mcp/server.py` | FastMCP: 2 tools + 1 resource (thin wrappers over pure fns) |
+| `homework-6/pipeline_status.py` | pure result-query logic (get_status / list_results / summary_text) — unit-tested |
+| `homework-6/mcp/server.py` | FastMCP wrapper: 2 tools + 1 resource over `pipeline_status` (dir has **no** `__init__.py`) |
 | `homework-6/scripts/coverage_gate.py` | run pytest+cov, parse %, exit 2 if < 80 |
 | `homework-6/scripts/coverage_gate_hook.sh` | PreToolUse hook: gate only on `git push` |
 | `homework-6/.githooks/pre-push` | git pre-push reuse of the gate |
@@ -77,8 +78,8 @@ testpaths = ["tests"]
 addopts = "-q"
 
 [tool.coverage.run]
-source = ["agents", "mcp", "integrator"]
-omit = ["tests/*", "scripts/*"]
+source = ["agents", "integrator", "pipeline_status"]
+omit = ["tests/*", "scripts/*", "mcp/*"]
 
 [tool.coverage.report]
 show_missing = true
@@ -939,24 +940,36 @@ git commit -m "feat(homework-6): add sequential orchestrator + integration tests
 
 ## Task 7: Custom FastMCP server + `mcp.json` + research notes
 
+> **Why the split (read first):** the directory `homework-6/mcp/` must NOT be an importable Python
+> package, because the installed `fastmcp` depends on a PyPI package literally named `mcp`. If
+> `homework-6/mcp/` had an `__init__.py`, `import mcp` (done internally by fastmcp) would resolve to
+> our local dir and break. So: pure query logic lives in a top-level module `pipeline_status.py`
+> (unit-tested, no fastmcp import), and `mcp/server.py` is a thin FastMCP wrapper with **no
+> `__init__.py`** in `mcp/`. Run as a script (`python mcp/server.py`) it works; it is never imported
+> as `mcp.server`. (A bare dir without `__init__.py` is only a namespace portion, so the real
+> site-packages `mcp` regular package wins.)
+
 **Files:**
-- Create: `homework-6/mcp/server.py`, `homework-6/mcp/__init__.py`
+- Create: `homework-6/pipeline_status.py`, `homework-6/mcp/server.py` (no `mcp/__init__.py`)
 - Create: `homework-6/mcp.json`, `homework-6/research-notes.md`
-- Test: `homework-6/tests/test_mcp_server.py`
+- Modify: `homework-6/pyproject.toml` (already corrected in Task 1 to `source = ["agents", "integrator", "pipeline_status"]`, `omit` includes `mcp/*`; verify it matches)
+- Test: `homework-6/tests/test_pipeline_status.py`
 
 - [ ] **Step 1: Use context7 to confirm the FastMCP decorator API**
 
 In Claude Code (launched from `homework-6/`), query context7 for FastMCP, e.g.:
 `resolve-library-id "fastmcp"` then `query-docs` for "tool and resource decorators". Confirm
-`@mcp.tool` and `@mcp.resource("uri")` usage. Record the result in `research-notes.md` (Step 6).
+`@mcp.tool` and `@mcp.resource("uri")` usage and `mcp.run()`. Record the result in
+`research-notes.md` (Step 6). If your fastmcp version requires `@mcp.tool()` (called) instead of
+`@mcp.tool`, adjust accordingly.
 
-- [ ] **Step 2: Write the failing test → `tests/test_mcp_server.py`**
+- [ ] **Step 2: Write the failing test → `tests/test_pipeline_status.py`**
 
 ```python
 import json
 from pathlib import Path
 
-from mcp import server
+import pipeline_status
 
 
 def seed_results(results_dir: Path):
@@ -970,66 +983,51 @@ def seed_results(results_dir: Path):
 
 def test_get_status_found(tmp_path):
     seed_results(tmp_path)
-    out = server._get_status(tmp_path, "TXN001")
-    assert out["status"] == "approved"
+    assert pipeline_status.get_status(tmp_path, "TXN001")["status"] == "approved"
 
 
 def test_get_status_not_found(tmp_path):
     seed_results(tmp_path)
-    out = server._get_status(tmp_path, "TXN999")
-    assert out["status"] == "not_found"
+    assert pipeline_status.get_status(tmp_path, "TXN999")["status"] == "not_found"
 
 
 def test_list_results(tmp_path):
     seed_results(tmp_path)
-    out = server._list_results(tmp_path)
+    out = pipeline_status.list_results(tmp_path)
     assert out["total"] == 1
     assert out["results"][0]["transaction_id"] == "TXN001"
 
 
 def test_summary_text(tmp_path):
     seed_results(tmp_path)
-    text = server._summary_text(tmp_path)
+    text = pipeline_status.summary_text(tmp_path)
     assert "Total: 1" in text
     assert "approved" in text
 
 
 def test_summary_text_missing(tmp_path):
-    text = server._summary_text(tmp_path)
-    assert "No pipeline" in text
+    assert "No pipeline" in pipeline_status.summary_text(tmp_path)
 ```
 
 - [ ] **Step 3: Run test to verify it fails**
 
-Run: `.venv/bin/python -m pytest tests/test_mcp_server.py -v`
-Expected: FAIL — `mcp.server` / helper functions not found.
+Run: `.venv/bin/python -m pytest tests/test_pipeline_status.py -v`
+Expected: FAIL — `pipeline_status` module not found.
 
-- [ ] **Step 4: Implement `mcp/__init__.py` (empty) and `mcp/server.py`**
+- [ ] **Step 4: Implement `pipeline_status.py`, then the `mcp/server.py` wrapper**
 
-`mcp/__init__.py`: empty file.
-
-`mcp/server.py`:
+`homework-6/pipeline_status.py`:
 ```python
-"""Custom FastMCP server exposing the pipeline results.
-
-Tools:    get_transaction_status, list_pipeline_results
-Resource: pipeline://summary
-"""
+"""Pure query logic over pipeline results (no MCP / transport dependency)."""
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
-from fastmcp import FastMCP
-
-BASE = Path(__file__).resolve().parent.parent
-RESULTS = BASE / "shared" / "results"
 SUMMARY_NAME = "pipeline-summary.json"
 
-mcp = FastMCP("pipeline-status")
 
-
-def _get_status(results_dir: Path, transaction_id: str) -> dict:
+def get_status(results_dir, transaction_id: str) -> dict:
     path = Path(results_dir) / f"{transaction_id}.json"
     if not path.exists():
         return {"transaction_id": transaction_id, "status": "not_found"}
@@ -1041,7 +1039,7 @@ def _get_status(results_dir: Path, transaction_id: str) -> dict:
     }
 
 
-def _list_results(results_dir: Path) -> dict:
+def list_results(results_dir) -> dict:
     results_dir = Path(results_dir)
     records = []
     for path in sorted(results_dir.glob("*.json")):
@@ -1059,7 +1057,7 @@ def _list_results(results_dir: Path) -> dict:
     return {"total": len(records), "counts": counts, "results": records}
 
 
-def _summary_text(results_dir: Path) -> str:
+def summary_text(results_dir) -> str:
     path = Path(results_dir) / SUMMARY_NAME
     if not path.exists():
         return "No pipeline run found. Run the pipeline first."
@@ -1069,34 +1067,65 @@ def _summary_text(results_dir: Path) -> str:
     for status, count in sorted(data.get("counts", {}).items()):
         lines.append(f"  {status}: {count}")
     return "\n".join(lines)
+```
+
+`homework-6/mcp/server.py` (do NOT create `mcp/__init__.py`):
+```python
+"""Custom FastMCP server exposing the pipeline results.
+
+Tools:    get_transaction_status, list_pipeline_results
+Resource: pipeline://summary
+
+Run as a script: `python mcp/server.py` (see mcp.json). This directory intentionally has no
+__init__.py so it is not importable as a `mcp` package (which would shadow the installed MCP SDK
+that FastMCP depends on). Pure query logic lives in `pipeline_status.py` and is unit-tested there.
+"""
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE))
+
+from fastmcp import FastMCP  # noqa: E402
+import pipeline_status  # noqa: E402
+
+RESULTS = BASE / "shared" / "results"
+
+mcp = FastMCP("pipeline-status")
 
 
 @mcp.tool
 def get_transaction_status(transaction_id: str) -> dict:
     """Return the current pipeline status of a transaction."""
-    return _get_status(RESULTS, transaction_id)
+    return pipeline_status.get_status(RESULTS, transaction_id)
 
 
 @mcp.tool
 def list_pipeline_results() -> dict:
     """Return a summary of all processed transactions."""
-    return _list_results(RESULTS)
+    return pipeline_status.list_results(RESULTS)
 
 
 @mcp.resource("pipeline://summary")
 def pipeline_summary() -> str:
     """Return the latest pipeline run summary as text."""
-    return _summary_text(RESULTS)
+    return pipeline_status.summary_text(RESULTS)
 
 
 if __name__ == "__main__":  # pragma: no cover
     mcp.run()
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [ ] **Step 5: Run tests + smoke-test the server imports cleanly**
 
-Run: `.venv/bin/python -m pytest tests/test_mcp_server.py -v`
+Run: `.venv/bin/python -m pytest tests/test_pipeline_status.py -v`
 Expected: PASS (5 passed).
+
+Then verify the server module imports without the `mcp` collision:
+Run: `.venv/bin/python -c "import runpy, sys; sys.argv=['server']; import importlib.util as u; spec=u.spec_from_file_location('srv','mcp/server.py'); m=u.module_from_spec(spec); spec.loader.exec_module(m); print('tools/resource registered OK')"`
+Expected: prints `tools/resource registered OK` with no ImportError. (If `@mcp.tool` errors, switch to `@mcp.tool()` per Step 1 and re-run.)
 
 - [ ] **Step 6: Write `homework-6/mcp.json` and `homework-6/research-notes.md`**
 
@@ -1136,8 +1165,8 @@ Expected: PASS (5 passed).
 - [ ] **Step 7: Commit**
 
 ```bash
-git add homework-6/mcp homework-6/mcp.json homework-6/research-notes.md homework-6/tests/test_mcp_server.py
-git commit -m "feat(homework-6): add FastMCP server, mcp.json, research notes" -m "Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
+git add homework-6/pipeline_status.py homework-6/mcp/server.py homework-6/mcp.json homework-6/research-notes.md homework-6/tests/test_pipeline_status.py homework-6/pyproject.toml
+git commit -m "feat(homework-6): add FastMCP server + pipeline_status logic, mcp.json, research notes" -m "Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
 
 ---
@@ -1635,7 +1664,10 @@ challenges, and all five screenshots embedded in the description.
 - **Placeholder scan:** all code steps contain full code; `research-notes.md` library IDs are the
   only intentional fill-ins (must be filled from the live context7 query in Task 7 Step 1).
 - **Type consistency:** `process_message(message: dict) -> dict` across all three agents;
-  `Pipeline(base_dir).run(transactions) -> summary`; helper names `_get_status`/`_list_results`/
-  `_summary_text` match between `mcp/server.py` and `tests/test_mcp_server.py`; agent `name`
-  constants (`AGENT_VALIDATOR`/`AGENT_FRAUD`/`AGENT_COMPLIANCE`/`TARGET_RESULTS`) consistent.
+  `Pipeline(base_dir).run(transactions) -> summary`; pure query fns `get_status`/`list_results`/
+  `summary_text` in `pipeline_status.py` match `tests/test_pipeline_status.py` and the `mcp/server.py`
+  wrappers; agent `name` constants (`AGENT_VALIDATOR`/`AGENT_FRAUD`/`AGENT_COMPLIANCE`/`TARGET_RESULTS`)
+  consistent.
+- **MCP package collision (resolved):** `mcp/` has no `__init__.py`; testable logic moved to
+  `pipeline_status.py`; coverage source updated accordingly.
 ```
