@@ -3,8 +3,8 @@ testpaths = ["tests"]
 addopts = "-q"
 
 [tool.coverage.run]
-source = ["agents", "mcp", "integrator"]
-omit = ["tests/*", "scripts/*"]
+source = ["agents", "integrator", "pipeline_status"]
+omit = ["tests/*", "scripts/*", "mcp/*"]
 
 [tool.coverage.report]
 show_missing = true
