@@ -50,3 +50,11 @@ def test_blocked_country_is_blocked():
     checker.BLOCKED_COUNTRIES = {"IR"}
     out = checker.process_message(fraud_msg(metadata={"country": "IR"}))
     assert out["data"]["status"] == "blocked"
+
+
+def test_blocked_currency_is_blocked():
+    checker = ComplianceChecker()
+    checker.BLOCKED_CURRENCIES = {"RUB"}
+    out = checker.process_message(fraud_msg(currency="RUB"))
+    assert out["data"]["status"] == "blocked"
+    assert any("blocked_currency" in v for v in out["data"]["compliance_violations"])

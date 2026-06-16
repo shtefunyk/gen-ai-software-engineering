@@ -40,3 +40,11 @@ def test_summary_file_is_written(tmp_path):
     assert summary_path.exists()
     data = json.loads(summary_path.read_text(encoding="utf-8"))
     assert data["total"] == 8
+
+
+def test_clear_removes_existing_files(tmp_path):
+    p = Pipeline(tmp_path)
+    p.setup_dirs()
+    (p.input / "stale.json").write_text('{"target_agent":"x","data":{}}')
+    p.clear()
+    assert not list(p.input.glob("*.json"))

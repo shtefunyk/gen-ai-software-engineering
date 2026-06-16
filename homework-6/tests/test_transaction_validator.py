@@ -62,3 +62,15 @@ def test_bad_amount_string_is_rejected():
     v = TransactionValidator()
     errs = v.validate(good_txn(amount="abc"))
     assert any("amount" in e for e in errs)
+
+
+def test_bad_destination_account_is_rejected():
+    v = TransactionValidator()
+    errs = v.validate(good_txn(destination_account="INVALID"))
+    assert any("destination_account" in e for e in errs)
+
+
+def test_disallowed_transaction_type_is_rejected():
+    v = TransactionValidator()
+    errs = v.validate(good_txn(transaction_type="payment"))
+    assert any("transaction_type" in e for e in errs)
