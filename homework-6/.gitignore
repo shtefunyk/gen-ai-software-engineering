@@ -6,3 +6,4 @@ coverage.json
 .coverage
 shared/**/*.json
 !shared/**/.gitkeep
+.mcp.json
