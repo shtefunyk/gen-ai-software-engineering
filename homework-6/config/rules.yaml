@@ -1,0 +1,25 @@
+version: 1
+rules:
+  - id: high_value_wire_block
+    description: Hard-block very large wire transfers
+    when:
+      all:
+        - { field: amount, op: ">=", value: 50000 }
+        - { field: transaction_type, op: "==", value: wire_transfer }
+    action: block
+    reason: high_value_wire
+  - id: cross_border_review
+    description: Route cross-border transactions to manual review
+    when:
+      - { field: metadata.country, op: "!=", value: US }
+    action: review
+    reason: cross_border
+  - id: structuring_flag
+    description: Flag amounts just under the $10k reporting threshold
+    when:
+      - { field: amount, op: between, value: [9000, 9999.99] }
+    action: flag
+    reason: structuring
+watchlists:
+  blocked_countries: [IR, KP, SY]
+  blocked_currencies: []
