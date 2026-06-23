@@ -14,7 +14,8 @@ def test_pipeline_processes_all_sample_transactions(tmp_path):
     summary = Pipeline(tmp_path).run(load_sample())
     assert summary["total"] == 8
     assert summary["counts"]["approved"] == 2
-    assert summary["counts"]["needs_review"] == 4
+    assert summary["counts"]["needs_review"] == 3
+    assert summary["counts"]["blocked"] == 1
     assert summary["counts"]["rejected"] == 2
 
 
@@ -32,6 +33,7 @@ def test_specific_dispositions(tmp_path):
     assert status("TXN004") == "needs_review"
     assert status("TXN006") == "rejected"
     assert status("TXN007") == "rejected"
+    assert status("TXN005") == "blocked"
 
 
 def test_summary_file_is_written(tmp_path):
@@ -48,3 +50,17 @@ def test_clear_removes_existing_files(tmp_path):
     (p.input / "stale.json").write_text('{"target_agent":"x","data":{}}')
     p.clear()
     assert not list(p.input.glob("*.json"))
+
+
+def test_process_one_returns_verdict(tmp_path):
+    result = Pipeline(tmp_path).process_one(load_sample()[0])
+    assert result["transaction_id"] == "TXN001"
+    assert result["status"] == "approved"
+
+
+def test_process_one_accumulates_results(tmp_path):
+    p = Pipeline(tmp_path)
+    p.process_one(load_sample()[0])   # TXN001 approved
+    p.process_one(load_sample()[4])   # TXN005 blocked
+    assert (tmp_path / "results" / "TXN001.json").exists()
+    assert (tmp_path / "results" / "TXN005.json").exists()

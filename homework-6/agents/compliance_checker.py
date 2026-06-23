@@ -11,9 +11,13 @@ AML_THRESHOLD = Decimal("10000")
 class ComplianceChecker:
     name = base.AGENT_COMPLIANCE
 
-    def __init__(self) -> None:
-        self.BLOCKED_COUNTRIES: set[str] = set()
-        self.BLOCKED_CURRENCIES: set[str] = set()
+    def __init__(self, ruleset=None) -> None:
+        if ruleset is not None:
+            self.BLOCKED_COUNTRIES = set(ruleset.blocked_countries)
+            self.BLOCKED_CURRENCIES = set(ruleset.blocked_currencies)
+        else:
+            self.BLOCKED_COUNTRIES = set()
+            self.BLOCKED_CURRENCIES = set()
 
     def check(self, data: dict) -> list[str]:
         violations: list[str] = []
@@ -35,10 +39,14 @@ class ComplianceChecker:
         violations = self.check(data)
         fraud_flags = data.get("fraud_flags", [])
         fraud_risk = data.get("fraud_risk", "low")
-        hard_block = any(v.startswith("blocked_") for v in violations)
+        policy_decision = data.get("policy_decision", "allow")
+        policy_reasons = data.get("policy_reasons", [])
+        hard_block = any(v.startswith("blocked_") for v in violations) or policy_decision == "block"
 
         if hard_block:
             status = "blocked"
+        elif policy_decision == "review":
+            status = "needs_review"
         elif fraud_risk != "high" and not fraud_flags and not violations:
             status = "approved"
         else:
@@ -47,6 +55,9 @@ class ComplianceChecker:
         data["compliance_violations"] = violations
         data["status"] = status
         if status != "approved":
-            reasons = list(fraud_flags) + violations
+            reasons: list[str] = []
+            for reason in list(fraud_flags) + violations + list(policy_reasons):
+                if reason not in reasons:
+                    reasons.append(reason)
             data["reason"] = "; ".join(reasons) if reasons else "high fraud risk"
         return base.make_message(self.name, base.TARGET_RESULTS, data)

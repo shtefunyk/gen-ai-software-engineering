@@ -51,7 +51,7 @@ def test_structuring_flag_near_threshold():
     assert score == 20
 
 
-def test_process_message_forwards_to_compliance():
+def test_process_message_forwards_to_policy():
     out = FraudDetector().process_message(base.make_message("v", "fraud_detector", txn()))
-    assert out["target_agent"] == base.AGENT_COMPLIANCE
+    assert out["target_agent"] == base.AGENT_POLICY
     assert out["data"]["fraud_risk"] == "low"
