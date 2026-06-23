@@ -1,0 +1,48 @@
+@base = http://127.0.0.1:8077
+
+### Health
+GET {{base}}/health
+
+### Submit an approved transaction
+POST {{base}}/transactions
+Content-Type: application/json
+
+{
+  "transaction_id": "TXN001",
+  "timestamp": "2026-03-16T09:00:00Z",
+  "source_account": "ACC-1001",
+  "destination_account": "ACC-2001",
+  "amount": "1500.00",
+  "currency": "USD",
+  "transaction_type": "transfer",
+  "description": "Monthly rent payment",
+  "metadata": { "channel": "online", "country": "US" }
+}
+
+### Submit a transaction blocked by the rule engine
+POST {{base}}/transactions
+Content-Type: application/json
+
+{
+  "transaction_id": "TXN005",
+  "timestamp": "2026-03-16T10:00:00Z",
+  "source_account": "ACC-1005",
+  "destination_account": "ACC-6600",
+  "amount": "75000.00",
+  "currency": "USD",
+  "transaction_type": "wire_transfer",
+  "description": "Property settlement",
+  "metadata": { "channel": "branch", "country": "US" }
+}
+
+### Get one transaction
+GET {{base}}/transactions/TXN001
+
+### List all results
+GET {{base}}/transactions
+
+### Pipeline summary
+GET {{base}}/summary
+
+### Current rules
+GET {{base}}/rules
