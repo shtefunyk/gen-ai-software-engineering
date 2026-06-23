@@ -1,5 +1,6 @@
 from agents.compliance_checker import ComplianceChecker
 from agents import base
+import rule_engine
 
 
 def fraud_msg(fraud_risk="low", fraud_flags=None, **over):
@@ -58,3 +59,26 @@ def test_blocked_currency_is_blocked():
     out = checker.process_message(fraud_msg(currency="RUB"))
     assert out["data"]["status"] == "blocked"
     assert any("blocked_currency" in v for v in out["data"]["compliance_violations"])
+
+
+def test_policy_block_forces_blocked():
+    out = ComplianceChecker().process_message(
+        fraud_msg(policy_decision="block", policy_reasons=["high_value_wire"]))
+    assert out["data"]["status"] == "blocked"
+    assert "high_value_wire" in out["data"]["reason"]
+
+
+def test_policy_review_forces_needs_review():
+    out = ComplianceChecker().process_message(
+        fraud_msg(policy_decision="review", policy_reasons=["cross_border"]))
+    assert out["data"]["status"] == "needs_review"
+
+
+def test_ruleset_populates_blocked_lists(tmp_path):
+    p = tmp_path / "rules.yaml"
+    p.write_text("watchlists:\n  blocked_countries: [IR]\n  blocked_currencies: [RUB]\n",
+                 encoding="utf-8")
+    checker = ComplianceChecker(ruleset=rule_engine.load_ruleset(p))
+    assert checker.BLOCKED_COUNTRIES == {"IR"}
+    out = checker.process_message(fraud_msg(metadata={"country": "IR"}))
+    assert out["data"]["status"] == "blocked"

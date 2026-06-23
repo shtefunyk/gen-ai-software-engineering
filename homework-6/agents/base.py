@@ -16,6 +16,7 @@ ISO_4217 = {
 AGENT_INTEGRATOR = "integrator"
 AGENT_VALIDATOR = "transaction_validator"
 AGENT_FRAUD = "fraud_detector"
+AGENT_POLICY = "policy_engine"
 AGENT_COMPLIANCE = "compliance_checker"
 TARGET_RESULTS = "results"
 

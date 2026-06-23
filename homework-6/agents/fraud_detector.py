@@ -47,4 +47,4 @@ class FraudDetector:
         data["fraud_score"] = score
         data["fraud_risk"] = risk
         data["fraud_flags"] = flags
-        return base.make_message(self.name, base.AGENT_COMPLIANCE, data)
+        return base.make_message(self.name, base.AGENT_POLICY, data)

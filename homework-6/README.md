@@ -14,24 +14,24 @@ directory, processes them, and writes to the next stage — a deterministic, ful
 - **Transaction Validator** — checks required fields, positive amount (≤ 2 decimals), ISO 4217
   currency, `ACC-XXXX` accounts, allowed transaction types.
 - **Fraud Detector** — scores 0–100 and flags high-value, overnight, and near-threshold transactions.
-- **Compliance Checker** — applies cross-border + AML (≥ $10,000) + blocked-list rules and sets the
-  final disposition (approved / needs_review / blocked).
+- **Policy Engine** — applies declarative rules from `config/rules.yaml` (condition → flag /
+  review / block); emits `policy_decision`, `policy_rules`, `policy_reasons`.
+- **Compliance Checker** — applies cross-border + AML (≥ $10,000) + blocked-list rules, folds in the
+  policy decision, and sets the final disposition (approved / needs_review / blocked).
 
 ## Architecture
 
 ```
- sample-transactions.json
-            |
-            v
-   +-----------------+      +----------------+      +--------------------+
-   |   input/        | ---> |   output/      | ---> |   output/          |
-   | Validator       |      | Fraud Detector |      | Compliance Checker |
-   +-----------------+      +----------------+      +--------------------+
-            |  (rejected)            |                        |
-            +------------------------+------------------------+
+ sample-transactions.json                          HTTP client / demo.sh
+            |                                              |
+            v                                              v
+   +-----------+  +--------+  +--------+  +------------+   FastAPI gateway
+   | Validator |->| Fraud  |->| Policy |->| Compliance |   (POST /transactions,
+   +-----------+  +--------+  +--------+  +------------+    GET /transactions/{id},
+            |          (rules.yaml) ^           |           /summary, /rules, /docs)
+            +--------------(rejected)-----------+
                                      v
-                               shared/results/
-                          (+ pipeline-summary.json)
+                               shared/results/  (+ pipeline-summary.json)
                                      |
                                      v
                      FastMCP server (get_transaction_status,
@@ -45,5 +45,7 @@ directory, processes them, and writes to the next stage — a deterministic, ful
 | Language | Python 3.13 |
 | Money | `decimal.Decimal` |
 | MCP | FastMCP (custom server) + context7 |
+| API | FastAPI + uvicorn (synchronous gateway) |
+| Rules | PyYAML-backed configurable rule engine |
 | Tests | pytest + pytest-cov (gate 80%, target ≥ 90%) |
 | Automation | Claude Code slash commands + PreToolUse coverage hook |

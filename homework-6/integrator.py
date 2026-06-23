@@ -7,22 +7,27 @@ from pathlib import Path
 from agents import base
 from agents.compliance_checker import ComplianceChecker
 from agents.fraud_detector import FraudDetector
+from agents.policy_engine import PolicyEngine
 from agents.transaction_validator import TransactionValidator
+import rule_engine
 
 SUMMARY_NAME = "pipeline-summary.json"
 
 
 class Pipeline:
-    def __init__(self, base_dir) -> None:
+    def __init__(self, base_dir, rules_path=None) -> None:
         self.base = Path(base_dir)
         self.input = self.base / "input"
         self.processing = self.base / "processing"
         self.output = self.base / "output"
         self.results = self.base / "results"
         self.log_path = self.base.parent / "logs" / "audit.log"
+        self.rules_path = Path(rules_path) if rules_path else Path(__file__).resolve().parent / "config" / "rules.yaml"
+        self.ruleset = rule_engine.load_ruleset(self.rules_path)
         self.validator = TransactionValidator()
         self.fraud = FraudDetector()
-        self.compliance = ComplianceChecker()
+        self.policy = PolicyEngine(self.ruleset)
+        self.compliance = ComplianceChecker(ruleset=self.ruleset)
 
     def setup_dirs(self) -> None:
         for directory in (self.input, self.processing, self.output, self.results):
@@ -78,10 +83,22 @@ class Pipeline:
         self.load(transactions)
         self.run_stage(self.validator, self.input)
         self.run_stage(self.fraud, self.output)
+        self.run_stage(self.policy, self.output)
         self.run_stage(self.compliance, self.output)
         summary = self.summarize()
         (self.results / SUMMARY_NAME).write_text(json.dumps(summary, indent=2), encoding="utf-8")
         return summary
+
+    def process_one(self, txn: dict) -> dict:
+        self.setup_dirs()
+        base.write_message(self.input,
+                           base.make_message(base.AGENT_INTEGRATOR, base.AGENT_VALIDATOR, dict(txn)))
+        self.run_stage(self.validator, self.input)
+        self.run_stage(self.fraud, self.output)
+        self.run_stage(self.policy, self.output)
+        self.run_stage(self.compliance, self.output)
+        path = self.results / f"{txn.get('transaction_id')}.json"
+        return json.loads(path.read_text(encoding="utf-8"))["data"]
 
 
 def print_summary(summary: dict) -> None:  # pragma: no cover
