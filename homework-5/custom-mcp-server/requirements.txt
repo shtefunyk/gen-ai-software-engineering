@@ -1,0 +1,3 @@
+# Homework 5 — custom MCP server dependencies
+# FastMCP requires Python >= 3.10
+fastmcp>=2.0.0

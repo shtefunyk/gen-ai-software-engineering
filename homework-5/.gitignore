@@ -1,0 +1,9 @@
+# Python venv for the custom MCP server — recreated locally, never committed
+custom-mcp-server/.venv/
+__pycache__/
+*.pyc
+
+# Secrets — tokens live only in shell env, never in files
+.env
+.env.*
+!.env.example

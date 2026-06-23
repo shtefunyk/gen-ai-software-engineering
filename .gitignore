@@ -56,3 +56,10 @@ temp/
 .Spotlight-V100
 .Trashes
 ehthumbs.db
+
+# Secrets (homework-5 MCP) — токени тільки в shell env, ніколи у файлах репо
+.env
+.env.*
+!.env.example
+*.local
+secrets.json
