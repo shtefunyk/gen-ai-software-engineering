@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+logs/
+coverage.json
+.coverage
+shared/**/*.json
+!shared/**/.gitkeep
+.mcp.json
